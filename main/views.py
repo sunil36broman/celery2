@@ -19,6 +19,8 @@ from .tasks import add
 import json
 import uuid
 import random
+from datetime import timezone, datetime, timedelta 
+
 # Create your views here.
 from django_celery_beat.models import PeriodicTask, CrontabSchedule
 from faker import Faker
@@ -101,7 +103,7 @@ class BooksListAPIView11(APIView):
 
     def get(self,request):
         print("previous celery")
-        add.delay(23,9)
+        # add.delay(23,9)
         # logger.info('Homepage was accessed at '+str(datetime.datetime.now())+' hours!')
         # print("after celery")
         # return Response({'data':"value"})
@@ -167,11 +169,41 @@ class BooksListAPIView11(APIView):
         # return Response({'data':"done"})
 
 
-
+        with connections['dham_db'].cursor() as cursor:
+           
+            # current_date_and_time = datetime.datetime.now()
+            # print(current_date_and_time)
+            # d = datetime.datetime(start_time)
+            # print("d",d)
+            # delta = datetime.timedelta(hours=4.1326742)
+            # print("delta",delta)
+            # final=d + delta
+            # print("final",final)
+            start_time='2021-06-03T18:43:50.895051Z'
+            print("start_time",start_time)
+            start_time_converted = datetime.datetime.strptime(start_time,"%Y-%m-%dT%H:%M:%S.%fZ")
+            delta = datetime.timedelta(days=1)
+            end_date_generate=start_time_converted+delta
+            end_date = end_date_generate.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+            print("end_date",end_date)  # 2021-03-07T07:39:22Z
+            # print( datetime.datetime(2010, 12, 25, 12, 59).astimezone().isoformat() )
+           
+            now = datetime.datetime.now()
+            dt_out = now.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+            print("---",dt_out)  # 2021-03-07T07:39:22Z
+            # end_time2=start_time+timedelta(hours = 1)
+            # print("end_time2",end_time2)
+            end_time='2021-06-03T18:43:51.272602Z'
+            print("end_time",end_time)
+            queryr="SELECT * FROM django_migrations WHERE applied >= %s AND applied < %s"
+            cursor.execute(queryr,(start_time,end_date))
+            # cursor.execute("SELECT * FROM django_migrations")
+            data=self.dictfetchall(cursor)
+            print(data)
 
        
             # cursor.execute("DELETE FROM categories")
-        return Response({'data':"done"})
+        return Response({'data':data})
         # print("connection.cursor=============",data)    
         # serializer = TodoSerializer(todos, many=True)  
 

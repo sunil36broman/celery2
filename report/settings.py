@@ -92,19 +92,19 @@ DATABASES = {
         'ENGINE':'django.db.backends.postgresql_psycopg2',
     },
     'dham_db':{
-        'NAME':'report_db21',
-        'USER':'report_user21',
-        'HOST':'localhost',
-        'PORT':'',
-        'PASSWORD':'report_password21',
-        'ENGINE':'django.db.backends.postgresql_psycopg2',
-
-        # 'NAME':'b2b_portal',
-        # 'USER':'b2b_portal',
+        # 'NAME':'report_db21',
+        # 'USER':'report_user21',
         # 'HOST':'localhost',
         # 'PORT':'',
-        # 'PASSWORD':'b2b_portal',
+        # 'PASSWORD':'report_password21',
         # 'ENGINE':'django.db.backends.postgresql_psycopg2',
+
+        'NAME':'b2b_portal',
+        'USER':'b2b_portal',
+        'HOST':'localhost',
+        'PORT':'',
+        'PASSWORD':'b2b_portal',
+        'ENGINE':'django.db.backends.postgresql_psycopg2',
     }
 }
 
